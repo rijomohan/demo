@@ -7,18 +7,4 @@ change2
 change 3
 change4
 new change
-rrr
-rrrrr
-ddd
-ddddd
-yyyyyyy
-hhh
-uuuu
-ddd
-kkk
-ttt
-1223
-333
-7777
-888888
-9999999
+66666
