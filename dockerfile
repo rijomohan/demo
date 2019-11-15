@@ -1,11 +1,11 @@
 # Use the official lightweight Python image.
 # https://hub.docker.com/_/python
-FROM continuumio/miniconda3
+FROM python:3
 
 # Copy local code to the container image.
-ENV APP_HOME /app
-WORKDIR $APP_HOME
-COPY . ./
+ADD sample.py /
+
+
 
 # Install production dependencies.
 
@@ -13,4 +13,4 @@ COPY . ./
 # webserver, with one worker process and 8 threads.
 # For environments with multiple CPU cores, increase the number of workers
 # to be equal to the cores available.
-CMD [ "python", "app/sample.py" ]
+CMD [ "python", "./sample.py" ]
