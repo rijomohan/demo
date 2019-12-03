@@ -24,7 +24,7 @@ stage('Download from GCS_pyfile') {
 stage('Build image') {
 	steps{
 		script{
-			app = docker.build('[${projectId}]/[${imageName}]')
+			app = docker.build("${projectId}/${imageName}")
 		}
 	}
 }
