@@ -23,14 +23,14 @@ stage('Download from GCS') {
 
 stage('Build image') {
 	steps{
-		app = docker.build("[${projectId}]/[${imageName}]")
+		step(app = docker.build("[${projectId}]/[${imageName}]"))
 	}
 }
 stage('Push image') {
 	steps{
-  		docker.withRegistry('https://gcr.io', 'gcr:[${projectId}]') {
+  		step(docker.withRegistry('https://gcr.io', 'gcr:[${projectId}]'){
     		app.push("${tagNumber}")
-    		app.push("latest")
+    		app.push("latest"))
 		}
   }
 }
