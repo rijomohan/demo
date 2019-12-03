@@ -22,7 +22,7 @@ stage('Download from GCS') {
 
 
 stage('Build image') {
-  app = docker.build("[${projectId}]/[${imageName]")
+	app = docker.build("[${projectId}]/[${imageName}]")
 }
 stage('Push image') {
   docker.withRegistry('https://gcr.io', 'gcr:[${projectId}]') {
