@@ -2,7 +2,7 @@ pipeline {
     agent any
    
 stages {
-stage('Download from GCS') {
+stage('Download from GCS_DOckerfile') {
             steps{
                 
                 step([$class: 'DownloadStep', 
@@ -11,7 +11,7 @@ stage('Download from GCS') {
             }
         }
 
-stage('Download from GCS') {
+stage('Download from GCS_pyfile') {
             steps{
                 
                 step([$class: 'DownloadStep', 
