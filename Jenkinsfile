@@ -37,4 +37,3 @@ stage('Push image') {
 }
 }
 }
-
