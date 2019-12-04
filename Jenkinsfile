@@ -31,11 +31,15 @@ stage('Build image') {
 stage('Push image') {
 	steps{
 		script{
-			docker.withRegistry('https://gcr.io', "gcr:${projectId}"){
-    			app.push("${tagNumber}")
-    			app.push("latest")}
-		}
+           		docker.withRegistry('https://gcr.io', "gcr:${projectId}"){
+            		app.push("${tagNumber}")
+    			app.push("latest")
+			
+			}
+          		}
+		
   }
 }
+	
 }
 }
