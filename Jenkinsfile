@@ -7,7 +7,7 @@ stage('Download from GCS_DOckerfile') {
                 
                 step([$class: 'DownloadStep', 
 			credentialsId:"${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/Dockerfile",
-                      localDirectory: "/var/lib/jenkins/workspace"])
+                      localDirectory: "/var/lib/jenkins/workspace/"])
             }
         }
 
@@ -16,7 +16,7 @@ stage('Download from GCS_pyfile') {
                 
                 step([$class: 'DownloadStep', 
 			credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
-                      localDirectory: "/var/lib/jenkins/workspace"])
+                      localDirectory: "/var/lib/jenkins/workspace/"])
             }
         }
 
