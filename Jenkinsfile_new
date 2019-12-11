@@ -1,41 +1,74 @@
 pipeline {
     agent any
+
+environment{
+		projectId = 'gifted-harmony-258007'
+		bucketName = 'reka_28'
    
 stages {
 stage('Download from GCS_DOckerfile') {
             steps{
                 
                 step([$class: 'DownloadStep', 
-			credentialsId:"${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/Dockerfile",
+			credentialsId:"${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/Dockerfile",
                       localDirectory: "/var/lib/jenkins/workspace/"])
             }
         }
 
 stage('Download from GCS_pyfile') {
             steps{
+		script{
+			if(${script_type} == 'Python')
+				{
                 
-                step([$class: 'DownloadStep', 
-			credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
-                      localDirectory: "/var/lib/jenkins/workspace/"])
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/*.py",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type} == 'R')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/*.R",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type} == 'Java')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/*.Java",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type} == 'Shell')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/src/*.sh",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type} == 'html')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/templates/*.html",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			}
             }
         }
 
 
 stage('Build image') {
-when {
-    expression { return token ==~ /(?i)(Y|YES|T|TRUE|ON|RUN)/ }
-       }
 	steps{
 		script{
-            
-			app = docker.build("gcr.io/${projectId}/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
+			app = docker.build("gcr.io/${env.projectId}/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
 		}
 	}
 }
 stage('Push image') {
 	steps{
 		script{
-			docker.withRegistry('https://gcr.io', "gcr:${projectId}"){
+			docker.withRegistry('https://gcr.io', "gcr:${env.projectId}"){
     			app.push("${tagNumber}")
     			app.push("latest")}
 		}
