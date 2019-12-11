@@ -1,0 +1,74 @@
+pipeline {
+    agent any
+   
+stages {
+stage('Download from GCS_DOckerfile') {
+            steps{
+                
+                step([$class: 'DownloadStep', 
+			credentialsId:"${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/Dockerfile",
+                      localDirectory: "/var/lib/jenkins/workspace/"])
+            }
+        }
+
+stage('Download from GCS_pyfile') {
+            steps{
+		script{
+			if(${script_type == 'Python')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type == 'R')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/*.R",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type == 'Java')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/*.Java",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type == 'Shell')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(${script_type == 'html')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: "${projectId}",  bucketUri: "gs://${bucketName}/${gcsPath}/templates/*.html",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			}
+            }
+        }
+
+
+stage('Build image') {
+	steps{
+		script{
+			app = docker.build("gcr.io/${projectId}/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
+		}
+	}
+}
+stage('Push image') {
+	steps{
+		script{
+			docker.withRegistry('https://gcr.io', "gcr:${projectId}"){
+    			app.push("${tagNumber}")
+    			app.push("latest")}
+		}
+  	}
+}
+}
+}
