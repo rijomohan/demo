@@ -11,7 +11,7 @@ stage('Download from GCS_DOckerfile') {
             steps{
                 
                 step([$class: 'DownloadStep', 
-			credentialsId:"${env.projectId}",  bucketUri: "gs://${env.bucketName}/${gcsPath}/Dockerfile",
+			credentialsId:${env.projectId},  bucketUri: "gs://${env.bucketName}/${gcsPath}/Dockerfile",
                       localDirectory: "/var/lib/jenkins/workspace/"])
             }
         }
