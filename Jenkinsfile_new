@@ -17,20 +17,47 @@ stage('Download from GCS_DOckerfile') {
         }
 
 stage('Download from GCS_pyfile') {
-            
-		
-			when{
-				expression{params.script_type == 'Python'}}
-				
-                	steps{
+            steps{
+		script{
+			if(params.script_type== 'Python')
+				{
+                
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
-				
-
-			
+				}
+			else if(params.script_type== 'R')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.R",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(params.script_type== 'Java')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.Java",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(params.script_type== 'Shell')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(params.script_type== 'html')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/templates/*.html",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			}
             }
         }
+
 
 
 stage('Build image') {
