@@ -65,8 +65,10 @@ stage('Download from GCS_pyfile') {
 
 stage('Build image') {
 	steps{
+		step{
 		
 			app = docker.build("gcr.io/$projectId/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
+			}
       
 		}
 	}
