@@ -20,7 +20,7 @@ stage('Download from GCS_pyfile') {
             
 		
 			when{
-				expression{${script_type} === 'Python'}}
+				expression{params.script_type} == 'Python'}}
 				
                 	steps{
                 			step([$class: 'DownloadStep', 
