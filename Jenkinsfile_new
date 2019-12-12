@@ -30,28 +30,28 @@ stage('Download from GCS_pyfile') {
 				{
                 
                 			step([$class: 'DownloadStep', 
-					credentialsId: $projectId,  bucketUri: "gs://$bucketName/${gcsPath}/*.R",
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.R",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
 			else if(${script_type} == 'Java')
 				{
                 
                 			step([$class: 'DownloadStep', 
-					credentialsId: $projectId,  bucketUri: "gs://$bucketName/${gcsPath}/*.Java",
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.Java",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
 			else if(${script_type} == 'Shell')
 				{
                 
                 			step([$class: 'DownloadStep', 
-					credentialsId: $projectId,  bucketUri: "gs://$bucketName/${gcsPath}/src/*.sh",
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
 			else if(${script_type} == 'html')
 				{
                 
                 			step([$class: 'DownloadStep', 
-					credentialsId: $projectId,  bucketUri: "gs://$bucketName/${gcsPath}/templates/*.html",
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/templates/*.html",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
 			}
