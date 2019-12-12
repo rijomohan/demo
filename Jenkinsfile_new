@@ -3,8 +3,8 @@ pipeline {
 
 environment{
 		projectId = 'gifted-harmony-258007'
-		bucketName = 'reka_28'
-		}
+		bucketName = 'artifacts.gifted-harmony-258007.appspot.com'
+	}
    
 stages {
 stage('Download from GCS_DOckerfile') {
