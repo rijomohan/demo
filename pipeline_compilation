@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+environment{
+		projectId = 'gifted-harmony-258007'
+		bucketName_download = 'reka_28'
+    bucketName_upload = 'reka_28'
+	}
+parameters { 
+    string(name: 'jobId', defaultValue: '', description: '')
+    string(name: 'gcsPath_download', defaultValue: '', description: '')
+    string(name: 'gcsPath_upload', defaultValue: '', description: '')
+    string(name: 'filename', defaultValue: '', description: '')
+    }
+    
+   
+stages {
+stage('Download from GCS_DOckerfile') {
+            steps{
+                
+                step([$class: 'DownloadStep', 
+			credentialsId:env.projectId,  bucketUri: "gs://${bucketName_download}/${params.gcsPath_download}/iristest_pipeline.py",
+                      localDirectory: "/var/lib/jenkins/workspace/"])
+            }
+        }
+ stage('Execute shell script'){
+            steps{
+                  sh '''
+                      cd /var/lib/jenkins/workspace/${params.gcsPath_download}
+                      python3 ${params.filename}
+                      gsutil cp ${params.filename}.tar.gz gs://${bucketName_upload}/${params.gcsPath_upload}/
+                   '''
+                   }
+        }
+     }
+  }
