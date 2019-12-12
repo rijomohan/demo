@@ -20,7 +20,7 @@ stage('Download from GCS_pyfile') {
             steps{
 		script{
 			
-    		for (int i = 0; i < param.number_of_files.toInteger(); ++i) {
+    		for (int i = 0; i < params.number_of_files.toInteger(); ++i) {
 			if(params.script_type== 'Python')
 				{
                 
