@@ -19,6 +19,8 @@ stage('Download from GCS_DOckerfile') {
 stage('Download from GCS_pyfile') {
             steps{
 		script{
+			
+    		for (int i = 0; i < ${number_of_files}; ++i) {
 			if(params.script_type== 'Python')
 				{
                 
@@ -54,6 +56,7 @@ stage('Download from GCS_pyfile') {
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/templates/*.html",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
+				}
 			}
             }
         }
@@ -62,10 +65,9 @@ stage('Download from GCS_pyfile') {
 
 stage('Build image') {
 	steps{
-		script{
-    for (int i = 0; i < 10; ++i) {
+		
 			app = docker.build("gcr.io/$projectId/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
-      }
+      
 		}
 	}
 }
