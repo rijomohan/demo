@@ -4,6 +4,7 @@ pipeline {
 environment{
 		projectId = 'gifted-harmony-258007'
 		bucketName = 'reka_28'
+		}
    
 stages {
 stage('Download from GCS_DOckerfile') {
