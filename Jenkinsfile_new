@@ -17,17 +17,18 @@ stage('Download from GCS_DOckerfile') {
         }
 
 stage('Download from GCS_pyfile') {
-            steps{
-		script{
-			when{expression{${script_type} == 'Python'}}
+            
+		
+			when{
+				expression{${script_type} == 'Python'}}
 				
-                
+                	steps{
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				
 
-			}
+			
             }
         }
 
