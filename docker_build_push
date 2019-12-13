@@ -18,44 +18,53 @@ stage('Download from GCS_DOckerfile') {
 
 stage('Download from GCS_pyfile') {
             steps{
-		script{
+	    	script{
+	    	
+			script_type=Python@Shell@html
+			set -f
+			IFS=@
+			ary=($script_type)
 			
-    		for (int i = 0; i < params.number_of_files.toInteger(); ++i) {
-			if(params.script_type== 'Python')
+			for key in "${!ary[@]}"; do
+		
+			
+    		
+			if(${ary[$key]} =='Python')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(params.script_type== 'R')
+			else if(${ary[$key]}== 'R')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.R",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(params.script_type== 'Java')
+			else if(${ary[$key]}== 'Java')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.Java",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(params.script_type== 'Shell')
+			else if(${ary[$key]}== 'Shell')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(params.script_type== 'html')
+			else if(${ary[$key]}== 'html')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/templates/*.html",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
+				done
 				}
 			}
             }
