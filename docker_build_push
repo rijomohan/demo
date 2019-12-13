@@ -22,7 +22,7 @@ stage('Download from GCS_pyfile') {
 	    	
 			
 			set -f
-			IFS=@
+			IFS=:
 			ary=(params.script_type)
 			
 			for key in "${!ary[@]}"; do
