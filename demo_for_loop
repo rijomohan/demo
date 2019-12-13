@@ -52,7 +52,7 @@ stage('Download from GCS_pyfile') {
 				{
                 
                 			step([$class: 'DownloadStep', 
-					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/shell/*.sh",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
 			else if(ary_split[i]== 'html')
