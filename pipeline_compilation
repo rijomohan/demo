@@ -19,16 +19,16 @@ stage('Download from GCS_DOckerfile') {
             steps{
                 
                 step([$class: 'DownloadStep', 
-			credentialsId:env.projectId,  bucketUri: "gs://${bucketName_download}/${params.gcsPath_download}/iristest_pipeline.py",
+			credentialsId:env.projectId,  bucketUri: "gs://${bucketName_download}/params.gcsPath_download/params.filename",
                       localDirectory: "/var/lib/jenkins/workspace/"])
             }
         }
  stage('Execute shell script'){
             steps{
                   sh '''
-                      cd /var/lib/jenkins/workspace/${params.gcsPath_download}
-                      python3 ${params.filename}
-                      gsutil cp ${params.filename}.tar.gz gs://${bucketName_upload}/${params.gcsPath_upload}/
+                      cd /var/lib/jenkins/workspace/params.gcsPath_download
+                      python3 params.filename
+                      gsutil cp params.filename.tar.gz gs://${bucketName_upload}/params.gcsPath_upload/
                    '''
                    }
         }
