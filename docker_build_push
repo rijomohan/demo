@@ -20,12 +20,13 @@ stage('Download from GCS_pyfile') {
             steps{
 	    	script{
 	    	
-			
+			sh'''
 			set -f
 			IFS=:
 			ary=(params.script_type)
 			
 			for key in "${!ary[@]}"; do
+			'''
 		
 			
     		
