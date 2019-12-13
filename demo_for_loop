@@ -30,7 +30,7 @@ stage('Download from GCS_pyfile') {
 			
 			{
 			
-    		
+    			echo ary[i]
 			if(ary[i] =='Python')
 				{
                 
