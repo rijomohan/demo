@@ -20,13 +20,8 @@ stage('Download from GCS_pyfile') {
             steps{
 	    	script{
 	    		ary=(params.script_type)
-			sh'''
-			set -f
-			IFS=:
-			
-			echo ary.length
-			'''
-			echo ary
+			ary_split=ary.split(':')
+			echo ary_split
 			for(int i=0;i<ary.size();i++)
 			
 			{
