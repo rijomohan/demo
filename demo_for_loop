@@ -27,35 +27,35 @@ stage('Download from GCS_pyfile') {
 			{
 			
     			echo ary_split[i]
-			if(ary[i] =='Python')
+			if(ary_split[i] =='Python')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(ary[i]== 'R')
+			else if(ary_split[i]== 'R')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.R",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(ary[i]== 'Java')
+			else if(ary_split[i]== 'Java')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.Java",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(ary[i]== 'Shell')
+			else if(ary_split[i]== 'Shell')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
-			else if(ary[i]== 'html')
+			else if(ary_split[i]== 'html')
 				{
                 
                 			step([$class: 'DownloadStep', 
