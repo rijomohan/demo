@@ -25,6 +25,7 @@ stage('Download from GCS_pyfile') {
 			IFS=:
 			ary=(params.script_type)
 			echo ary.length
+			'''
 			for(int i=0;i<ary.length;i++)
 			
 			{
@@ -66,7 +67,7 @@ stage('Download from GCS_pyfile') {
                       			localDirectory: "/var/lib/jenkins/workspace/"])
 				}
 				
-				}'''
+				}
 				}
 			}
             }
