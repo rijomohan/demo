@@ -19,11 +19,11 @@ stage('Download from GCS_DOckerfile') {
 stage('Download from GCS_pyfile') {
             steps{
 	    	script{
-	    	
+	    		ary=(params.script_type)
 			sh'''
 			set -f
 			IFS=:
-			ary=(params.script_type)
+			
 			echo ary.length
 			'''
 			for(int i=0;i<ary.length;i++)
