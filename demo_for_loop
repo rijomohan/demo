@@ -1,0 +1,98 @@
+pipeline {
+    agent any
+
+environment{
+		projectId = 'gifted-harmony-258007'
+		bucketName = 'artifacts.gifted-harmony-258007.appspot.com'
+	}
+   
+stages {
+stage('Download from GCS_DOckerfile') {
+            steps{
+                
+                step([$class: 'DownloadStep', 
+			credentialsId:env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/Dockerfile",
+                      localDirectory: "/var/lib/jenkins/workspace/"])
+            }
+        }
+
+stage('Download from GCS_pyfile') {
+            steps{
+	    	script{
+	    		ary=(params.script_type)
+			sh'''
+			set -f
+			IFS=:
+			
+			echo ary.length
+			'''
+			for(int i=0;i<${ary}.length;i++)
+			
+			{
+			
+    		
+			if(ary[i] =='Python')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.py",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(ary[i]== 'R')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.R",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(ary[i]== 'Java')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/*.Java",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(ary[i]== 'Shell')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/src/*.sh",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+			else if(ary[i]== 'html')
+				{
+                
+                			step([$class: 'DownloadStep', 
+					credentialsId: env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/templates/*.html",
+                      			localDirectory: "/var/lib/jenkins/workspace/"])
+				}
+				
+				}
+				}
+			}
+            }
+        
+
+
+
+stage('Build image') {
+	steps{
+		script{
+		
+			app = docker.build("gcr.io/$projectId/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
+			}
+      
+		}
+	}
+
+stage('Push image') {
+	steps{
+		script{
+			docker.withRegistry('https://gcr.io', "gcr:$projectId"){
+    			app.push("${tagNumber}")
+    			app.push("latest")}
+		}
+  	}
+}
+}
+}
