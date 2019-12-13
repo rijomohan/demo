@@ -24,7 +24,7 @@ stage('Download from GCS_pyfile') {
 			set -f
 			IFS=:
 			ary=(params.script_type)
-			
+			echo ary.length
 			for key in "${!ary[@]}"; do
 			
 		
