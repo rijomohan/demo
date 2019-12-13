@@ -20,10 +20,10 @@ stage('Download from GCS_pyfile') {
             steps{
 	    	script{
 	    	
-			script_type=Python@Shell@html
+			
 			set -f
 			IFS=@
-			ary=($script_type)
+			ary=(params.script_type)
 			
 			for key in "${!ary[@]}"; do
 		
