@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+    parameters{
+              string(name: 'jobId', defaultValue: '', description: '')
+              string(name: 'IMAGE_PATH', defaultValue: '', description: '')
+              string(name: 'MODEL_PATH', defaultValue: '', description: '')
+              string(name: 'CONTAINER_PORT', defaultValue: '', description: '')
+              string(name: 'SERVICE_PORT', defaultValue: '', description: '')
+              string(name: 'NAME', defaultValue: '', description: '')
+              string(name: 'SERVICE_TYPE', defaultValue: '', description: '')
+              }
+    stages{
+          stage('Replacing dynamic values into template'){
+                          steps{
+                                sh'''
+                                    gsutil cp gs://reka_28/deploy/stageenv/scripts/deploy.yml.template .
+                                    cat "deploy.yml.template" | sed "s@IMAGE_PATH@$IMAGE_PATH@g" | sed "s@CONTAINER_PORT@$CONTAINER_PORT@g" | sed "s@SERVICE_PORT@$SERVICE_PORT@g" | sed "s@SERVICE_TYPE@$SERVICE_TYPE@g" | sed "s@NAME@$NAME@g" | sed "s@MODEL_PATH@$MODEL_PATH@g" > deploy.yaml
+                                '''
+                                }
+                        }
+          stage('Deploy to Kubernetes'){
+                          steps{
+                                kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
+                                kubeconfigId: 'StageENV', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
+                                textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                                }
+                            }
+                       }
+            }
+
+              
+          
