@@ -11,12 +11,8 @@ pipeline {
               string(name: 'Deploy_Env', defaultValue: '', description: '')
               }
               
-    environment{
-                if(params.Deploy_Env == 'Staging')
-                     { kubecfgid=stageenv2 }
-                else if(params.Deploy_Env == 'Production')
-                     { kubecfgid=prodenv }
-                }
+   
+                
     stages{
           stage('Replacing dynamic values into template'){
                           steps{
@@ -28,9 +24,16 @@ pipeline {
                         }
           stage('Deploy to Kubernetes'){
                           steps{
+                                    script{
+                                             if(params.Deploy_Env == 'Staging')
+                                                { kubecfgid=stageenv2 }
+                                             else if(params.Deploy_Env == 'Production')
+                                                { kubecfgid=prodenv }
+                        
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
                                 kubeconfigId: 'kubecfgid', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
                                 textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                                }
                                 }
                             }
                        }
