@@ -21,7 +21,7 @@ pipeline {
           stage('Deploy to Kubernetes'){
                           steps{
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
-                                kubeconfigId: 'StageENV', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
+                                kubeconfigId: 'stageenv2', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
                                 textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
                                 }
                             }
