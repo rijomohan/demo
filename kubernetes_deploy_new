@@ -12,6 +12,9 @@ pipeline {
               }
    
    
+    environment{ 
+                kubecfgid="StageEnv" 
+                }
                 
     stages{
           stage('Replacing dynamic values into template'){
@@ -27,9 +30,9 @@ pipeline {
                                     script{    
                                              if(params.Deploy_Env == 'Staging')
                                            { 
-                                                environment{ kubecfgid="StageEnv" }}
+                                                env.kubecfgid="StageEnv" }
                                              else if(params.Deploy_Env == 'Production')
-                                               {environment{kubecfgid="ProdEnv" }}
+                                               {env.kubecfgid="ProdEnv" }
                                             else
                                                
                                                 { env.kubecfgid="StageEnv" }
