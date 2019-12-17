@@ -36,12 +36,13 @@ pipeline {
                                             else
                                                
                                                 { env.kubecfgid="StageEnv" }
+                                      echo 'env.kubecfgid'
                         
-                                
+                              }  
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
                                 kubeconfigId: env.kubecfgid, secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
                                 textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-                                }
+                                
                                 }
                             }
                        }
