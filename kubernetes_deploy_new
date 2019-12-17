@@ -31,7 +31,7 @@ pipeline {
                                                 { kubecfgid=ProdEnv }
                         
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
-                                kubeconfigId: 'kubecfgid', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
+                                kubeconfigId: 'StageEnv', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
                                 textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
                                 }
                                 }
