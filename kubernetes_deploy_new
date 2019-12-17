@@ -11,10 +11,7 @@ pipeline {
               string(name: 'Deploy_Env', defaultValue: '', description: '')
               }
    
-   environment{
    
-                kubecfgid="StageEnv"
-                }
                 
     stages{
           stage('Replacing dynamic values into template'){
@@ -27,16 +24,16 @@ pipeline {
                         }
           stage('Deploy to Kubernetes'){
                           steps{
-                                    script{    echo params.Deploy_Env
+                                    script{    
                                              if(params.Deploy_Env == 'Staging')
-                                           { echo 'Entering if cond'
-                                                 env.kubecfgid="StageEnv" }
+                                           { 
+                                                environment{ kubecfgid="StageEnv" }}
                                              else if(params.Deploy_Env == 'Production')
-                                               {env.kubecfgid="ProdEnv" }
+                                               {environment{kubecfgid="ProdEnv" }}
                                             else
                                                
                                                 { env.kubecfgid="StageEnv" }
-                                      echo env.kubecfgid
+                                      
                         
                               }  
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
