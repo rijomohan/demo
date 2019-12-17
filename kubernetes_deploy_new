@@ -29,8 +29,8 @@ pipeline {
                           steps{
                                     script{    echo params.Deploy_Env
                                              if(params.Deploy_Env == 'Staging')
-                                           
-                                                { env.kubecfgid="StageEnv" }
+                                           { echo 'Entering if cond'
+                                                 env.kubecfgid="StageEnv" }
                                              else if(params.Deploy_Env == 'Production')
                                                {env.kubecfgid="ProdEnv" }
                                             else
