@@ -26,12 +26,12 @@ pipeline {
                           steps{
                                     script{
                                              if(params.Deploy_Env == 'Staging')
-                                                { kubecfgid=StageEnv }
+                                                { kubecfgid="StageEnv" }
                                              else if(params.Deploy_Env == 'Production')
-                                                { kubecfgid=ProdEnv }
+                                                { kubecfgid="ProdEnv" }
                         
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
-                                kubeconfigId: 'StageEnv', secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
+                                kubeconfigId: kubecfgid, secretName: 'regcred', ssh: [sshCredentialsId: '*', sshServer: ''], 
                                 textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
                                 }
                                 }
