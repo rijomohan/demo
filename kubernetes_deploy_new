@@ -10,7 +10,10 @@ pipeline {
               string(name: 'SERVICE_TYPE', defaultValue: '', description: '')
               string(name: 'Deploy_Env', defaultValue: '', description: '')
               }
+   environment{
               
+              kubecfgid=''
+              }
    
                 
     stages{
@@ -26,13 +29,13 @@ pipeline {
                           steps{
                                     script{
                                              if(params.Deploy_Env == 'Staging')
-                                            { environment{
-                                                { kubecfgid="StageEnv" }}
+                                           
+                                                { env.kubecfgid="StageEnv" }
                                              else if(params.Deploy_Env == 'Production')
-                                               {environment { kubecfgid="ProdEnv" }}
+                                               {env.kubecfgid="ProdEnv" }
                                             else
-                                               { environment{
-                                                { kubecfgid="StageEnv" }}
+                                               
+                                                { env.kubecfgid="StageEnv" }
                         
                                 
                                 kubernetesDeploy configs: 'deploy.yaml', kubeConfig: [path: ''], 
