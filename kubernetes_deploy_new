@@ -10,11 +10,11 @@ pipeline {
               string(name: 'SERVICE_TYPE', defaultValue: '', description: '')
               string(name: 'Deploy_Env', defaultValue: '', description: '')
               }
-   environment{
-              
-              kubecfgid=''
-              }
    
+   environment{
+   
+                kubecfgid="StageEnv"
+                }
                 
     stages{
           stage('Replacing dynamic values into template'){
