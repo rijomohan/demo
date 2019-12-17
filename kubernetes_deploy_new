@@ -27,7 +27,7 @@ pipeline {
                         }
           stage('Deploy to Kubernetes'){
                           steps{
-                                    script{
+                                    script{    echo params.Deploy_Env
                                              if(params.Deploy_Env == 'Staging')
                                            
                                                 { env.kubecfgid="StageEnv" }
