@@ -7,8 +7,8 @@ stages {
 stage('Test') {
            steps{
 	   
-	   	echo env.DEV_PROJECTID
-		echo env.DEV_BUCKETNAME
+	   	echo $DEV_PROJECTID
+		echo $DEV_BUCKETNAME
 		}
 		}
 		}
