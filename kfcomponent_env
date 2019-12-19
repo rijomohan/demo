@@ -9,7 +9,7 @@ stage('Download from GCS_DOckerfile') {
                 
                 step([$class: 'DownloadStep', 
 			credentialsId:$DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/Dockerfile",
-                      localDirectory: "/var/lib/jenkins/workspace/"])
+                      localDirectory: $LOCAL_DIRECTORY])
             }
         }
 
@@ -29,35 +29,35 @@ stage('Download from GCS_pyfile') {
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/*.py",
-                      			localDirectory: "/var/lib/jenkins/workspace/"])
+                      			localDirectory: $LOCAL_DIRECTORY])
 				}
 			else if(ary_split[i]== 'R')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/*.R",
-                      			localDirectory: "/var/lib/jenkins/workspace/"])
+                      			localDirectory: $LOCAL_DIRECTORY])
 				}
 			else if(ary_split[i]== 'Java')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/*.Java",
-                      			localDirectory: "/var/lib/jenkins/workspace/"])
+                      			localDirectory: $LOCAL_DIRECTORY])
 				}
 			else if(ary_split[i]== 'Shell')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/shell/*.sh",
-                      			localDirectory: "/var/lib/jenkins/workspace/"])
+                      			localDirectory: $LOCAL_DIRECTORY])
 				}
 			else if(ary_split[i]== 'html')
 				{
                 
                 			step([$class: 'DownloadStep', 
 					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/templates/*.html",
-                      			localDirectory: "/var/lib/jenkins/workspace/"])
+                      			localDirectory: $LOCAL_DIRECTORY])
 				}
 				
 				}
@@ -72,7 +72,7 @@ stage('Build image') {
 	steps{
 		script{
 		
-			app = docker.build("gcr.io/$DEV_PROJECTID/${imageName}","/var/lib/jenkins/workspace/${gcsPath}/")
+			app = docker.build("gcr.io/$DEV_PROJECTID/${imageName}","$LOCAL_DIRECTORY/${gcsPath}/")
 			}
       
 		}
