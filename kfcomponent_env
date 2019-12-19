@@ -11,7 +11,7 @@ stage('Download from GCS_DOckerfile') {
 	    		
                 
                 step([$class: 'DownloadStep', 
-			credentialsId:env.DEV_PROJECTID,  bucketUri: "gs://env.DEV_BUCKETNAME/${gcsPath}/Dockerfile",
+			credentialsId:env.DEV_PROJECTID,  bucketUri: "gs://${DEV_BUCKETNAME}/${gcsPath}/Dockerfile",
                       localDirectory: env.LOCAL_DIRECTORY])
             }
         }
