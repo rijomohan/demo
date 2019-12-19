@@ -1,16 +1,25 @@
-pipeline {
-    agent any
-environment{
+def loadProperties() {
+    node {
+        checkout scm
+        properties = readProperties file: '/home/rijomohan/kfpipeline/jenkins_deploy/seldon/customenv.properties'
+        
+    }
+}
 
-		PATH = "/home/rijomohan/kfpipeline/jenkins_deploy/seldon /customenv.properties"
-		}
-   
-stages {
-stage('Test') {
-           steps{
-	   
-	   	sh 'printenv'
-		}
-		}
-		}
-		}
+pipeline {
+    agent none
+
+    stages {           
+        stage ('prepare') {
+            agent any
+
+            steps {
+                script {
+                    loadProperties()
+                    sh 'printenv'
+                }
+            }
+        }
+	
+	}
+	}
