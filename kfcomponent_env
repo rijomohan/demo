@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     loadProperties()
-                    sh 'printenv'
+                    echo env.DEV_PROJECTID
                 }
             }
         }
