@@ -1,11 +1,14 @@
 pipeline {
     agent any
-    load "/home/rijomohan/kfpipeline/jenkins_deploy/seldon/customenv.groovy"
+    environment{
+    		PATH = "/home/rijomohan/kfpipeline/jenkins_deploy/seldon/customenv.properties"
+		}
 
    
 stages {
 stage('Download from GCS_DOckerfile') {
             steps{
+	    		sh "printenv"
                 
                 step([$class: 'DownloadStep', 
 			credentialsId:$DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/Dockerfile",
