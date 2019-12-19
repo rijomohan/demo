@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+load /home/rijomohan/kfpipeline/jenkins_deploy/seldon/customenv.properties
 
    
 stages {
