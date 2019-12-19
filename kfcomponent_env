@@ -6,89 +6,11 @@ pipeline {
 
    
 stages {
-stage('Download from GCS_DOckerfile') {
-            steps{
-	    		
-                
-                step([$class: 'DownloadStep', 
-			credentialsId:env.DEV_PROJECTID,  bucketUri: "gs://${env.DEV_BUCKETNAME}/${gcsPath}/Dockerfile",
-                      localDirectory: env.LOCAL_DIRECTORY])
-            }
-        }
-
-stage('Download from GCS_pyfile') {
-            steps{
-	    	script{
-	    		ary=(params.script_type)
-			ary_split=ary.split(':')
-			
-			for(int i=0;i<ary_split.size();i++)
-			
-			{
-			
-    			echo ary_split[i]
-			if(ary_split[i] =='Python')
-				{
-                
-                			step([$class: 'DownloadStep', 
-					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/*.py",
-                      			localDirectory: $LOCAL_DIRECTORY])
-				}
-			else if(ary_split[i]== 'R')
-				{
-                
-                			step([$class: 'DownloadStep', 
-					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/*.R",
-                      			localDirectory: $LOCAL_DIRECTORY])
-				}
-			else if(ary_split[i]== 'Java')
-				{
-                
-                			step([$class: 'DownloadStep', 
-					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/*.Java",
-                      			localDirectory: $LOCAL_DIRECTORY])
-				}
-			else if(ary_split[i]== 'Shell')
-				{
-                
-                			step([$class: 'DownloadStep', 
-					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/shell/*.sh",
-                      			localDirectory: $LOCAL_DIRECTORY])
-				}
-			else if(ary_split[i]== 'html')
-				{
-                
-                			step([$class: 'DownloadStep', 
-					credentialsId: $DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/templates/*.html",
-                      			localDirectory: $LOCAL_DIRECTORY])
-				}
-				
-				}
-				}
-			}
-            }
-        
-
-
-
-stage('Build image') {
-	steps{
-		script{
-		
-			app = docker.build("gcr.io/$DEV_PROJECTID/${imageName}","$LOCAL_DIRECTORY/${gcsPath}/")
-			}
-      
+stage('Test') {
+           steps{
+	   	echo env.DEV_PROJECTID
+		echo env.DEV_BUCKETNAME
 		}
-	}
-
-stage('Push image') {
-	steps{
-		script{
-			docker.withRegistry('https://gcr.io', "gcr:$DEV_PROJECTID"){
-    			app.push("${tagNumber}")
-    			app.push("latest")}
 		}
-  	}
-}
-}
-}
+		}
+		}
