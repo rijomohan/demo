@@ -9,7 +9,7 @@ pipeline {
               }
               
    stages{
-          stage{'Seldon Deployment'){
+          stage('Seldon Deployment'){
                                 steps{
                                      sh'''
                                           cp /home/rijomohan/kfpipeline/jenkins_deploy/seldon/GenericPredict.json.template .
