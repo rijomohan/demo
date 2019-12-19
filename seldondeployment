@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    parameters{
+              string(name: 'jobId', defaultValue: '', description: '')
+              string(name: 'MODEL_PATH_URL', defaultValue: '', description: '')
+              string(name: 'MODEL_TYPE', defaultValue: '', description: '')
+              string(name: 'MODEL_NAME', defaultValue: '', description: '')
+              string(name: 'DEPLOY_ENV', defaultValue: '', description: '')
+              }
+              
+   stages{
+          stage{'Seldon Deployment'){
+                                steps{
+                                     sh'''
+                                          cp /home/rijomohan/kfpipeline/jenkins_deploy/seldon/GenericPredict.json.template .
+                                          cp /home/rijomohan/kfpipeline/jenkins_deploy/seldon/sconfig .
+                                          cat "GenericPredict.json.template" | sed "s@MODEL_PATH_URL@$MODEL_PATH_URL@g" | sed "s@MODEL_TYPE@$MODEL_TYPE@g" | sed "s@MODEL_NAME@$MODEL_NAME@g" > GenericPredict.json
+                                          kubectl  --kubeconfig=sconfig | pygmentize GenericPredict.json
+                                          kubectl --kubeconfig=sconfig create -f GenericPredict.json
+                                          '''
+                                          }
+                                       }
+    }
+    }
+                                          
+                
