@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     loadProperties()
-                    echo env.DEV_PROJECTID
+                    echo $DEV_PROJECTID
                 }
             }
         }
