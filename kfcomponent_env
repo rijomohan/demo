@@ -8,9 +8,7 @@ pipeline {
 stages {
 stage('Download from GCS_DOckerfile') {
             steps{
-	    		script{
-				sh "printenv"
-				}
+	    		
                 
                 step([$class: 'DownloadStep', 
 			credentialsId:$DEV_PROJECTID,  bucketUri: "gs://$DEV_BUCKETNAME/${gcsPath}/Dockerfile",
