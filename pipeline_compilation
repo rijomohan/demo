@@ -3,8 +3,8 @@ pipeline {
 
 environment{
 		projectId = 'gifted-harmony-258007'
-		bucketName_download = 'reka_28'
-    bucketName_upload = 'reka_28'
+		bucketName = 'reka_28'
+    
 	}
 parameters { 
     string(name: 'jobId', defaultValue: '', description: '')
@@ -19,7 +19,7 @@ stage('Download from GCS_DOckerfile') {
             steps{
                 
                 step([$class: 'DownloadStep', 
-			credentialsId:env.projectId,  bucketUri: "gs://${bucketName_download}/${gcsPath_download}/${fileName}",
+			credentialsId:env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath_download}/${fileName}",
                       localDirectory: "/var/lib/jenkins/workspace/"])
             }
         }
@@ -28,7 +28,7 @@ stage('Download from GCS_DOckerfile') {
                   sh '''
                       cd /var/lib/jenkins/workspace/${gcsPath_download}
                       python3 ${fileName}
-                      gsutil cp ${fileName}.tar.gz gs://${bucketName_upload}/${gcsPath_upload}/
+                      gsutil cp ${fileName}.tar.gz gs://${bucketName}/${gcsPath_upload}/
                    '''
                    }
         }
