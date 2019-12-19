@@ -1,14 +1,16 @@
 pipeline {
     agent any
+environment{
 
-
+		PATH = "/home/rijomohan/kfpipeline/jenkins_deploy/seldon /customenv.properties"
+		}
    
 stages {
 stage('Test') {
            steps{
 	   
-	   	echo $DEV_PROJECTID
-		echo $DEV_BUCKETNAME
+	   	echo "$DEV_PROJECTID"
+		echo "$DEV_BUCKETNAME"
 		}
 		}
 		}
