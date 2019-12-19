@@ -9,8 +9,7 @@ stages {
 stage('Test') {
            steps{
 	   
-	   	echo "$DEV_PROJECTID"
-		echo "$DEV_BUCKETNAME"
+	   	sh 'printenv'
 		}
 		}
 		}
