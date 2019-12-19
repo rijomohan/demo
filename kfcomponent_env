@@ -1,15 +1,16 @@
 pipeline {
     agent any
-    environment{
-    		PATH = "/home/rijomohan/kfpipeline/jenkins_deploy/seldon/customenv.properties"
-		}
+    
 
    
 stages {
 stage('Test') {
            steps{
-	   	echo env.DEV_PROJECTID
-		echo env.DEV_BUCKETNAME
+	   script{
+	   	def props = readProperties file:"/home/rijomohan/kfpipeline/jenkins_deploy/seldon/customenv.properties"
+		}
+	   	echo props.DEV_PROJECTID
+		echo props.DEV_BUCKETNAME
 		}
 		}
 		}
