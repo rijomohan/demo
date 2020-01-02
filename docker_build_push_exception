@@ -86,7 +86,7 @@ stage('Download from GCS_pyfile') {
 				}
 				}
 				catch(Exception e){
-				echo "Failure"}
+				env.error_message='download failed'}
 				}
 			}
         
