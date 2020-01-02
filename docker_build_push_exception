@@ -22,9 +22,9 @@ stage('Download from GCS_DOckerfile') {
             
             post{
 	    failure{
-	    step{
+	    step(
             error_message= "Downloading Dockerfile failed"
-	    }
+	    )
             }
 	    }
         }
