@@ -113,12 +113,13 @@ stage('Push image') {
 		}
   	}
 }
-}
+
 catch(Exception e){
 error_message= "Pushing image failed"
 }
 }
 }
+
 post {
                 success {
                     script {
@@ -130,4 +131,6 @@ post {
                         echo error_message
                     }
                 }
+}
+}
 }
