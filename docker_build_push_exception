@@ -7,9 +7,10 @@ environment{
     error_message=''
 	}
    
-script{
+
 
 stages {
+script{
 stage('Download from GCS_DOckerfile') {
            try{
            steps{
