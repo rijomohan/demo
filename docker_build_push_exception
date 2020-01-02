@@ -23,7 +23,7 @@ stage('Download from GCS_DOckerfile') {
             post{
 	    failure{
 	    step(
-            error_message= "Downloading Dockerfile failed"
+            env.error_message= "Downloading Dockerfile failed"
 	    )
             }
 	    }
@@ -106,7 +106,7 @@ stage('Build image') {
   post{
 	    failure{
 	    step(
-            error_message= "Downloading Dockerfile failed"
+            env.error_message= "Building image failed"
 	    )
             }
 	    }
@@ -123,7 +123,7 @@ stage('Push image') {
  post{
 	    failure{
 	    step(
-            error_message= "Downloading Dockerfile failed"
+            env.error_message= "Pushing image failed"
 	    )
             }
 	    }
@@ -138,7 +138,7 @@ post {
                 }
                 failure {
                     script {
-                        echo error_message
+                        echo env.error_message
                     }
                 }
 
