@@ -34,6 +34,7 @@ stage('Download from GCS_pyfile') {
 
            steps{
 	    	script{
+		try{
 	    		ary=(params.script_type)
 			sh'''
 			set -f
@@ -84,14 +85,11 @@ stage('Download from GCS_pyfile') {
 				
 				}
 				}
+				catch(Exception e){
+				echo "Failure"}
+				}
 			}
-        post{
-	    failure{
-	    script{
-            echo "failure"
-	    }
-            }
-	    }
+        
         
 }
 
