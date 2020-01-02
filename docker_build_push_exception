@@ -31,8 +31,7 @@ stage('Download from GCS_DOckerfile') {
 	
 
 stage('Download from GCS_pyfile') {
-script{
-           try{
+
            steps{
 	    	script{
 	    		ary=(params.script_type)
@@ -86,18 +85,19 @@ script{
 				}
 				}
 			}
+        post{
+	    failure{
+	    step(
+            error_message= "Downloading Dockerfile failed"
+	    )
             }
-            catch(Exception e){
-        error_message= "Downloading script failed"
-        }
-            }
+	    }
         
 }
 
 
 stage('Build image') {
-script{
-	try{
+
   steps{
 		script{
 		
@@ -105,15 +105,16 @@ script{
 			}
       
 		}
-    }
-    catch(Exception e){
-error_message= "Building image failed"
-}
-	}
+  post{
+	    failure{
+	    step(
+            error_message= "Downloading Dockerfile failed"
+	    )
+            }
+	    }
 }
 stage('Push image') {
-script{
-	try{
+
   steps{
 		script{
 			docker.withRegistry('https://gcr.io', "gcr:$projectId"){
@@ -121,12 +122,13 @@ script{
     			app.push("latest")}
 		}
   	}
-}
-
-catch(Exception e){
-error_message= "Pushing image failed"
-}
-}
+ post{
+	    failure{
+	    step(
+            error_message= "Downloading Dockerfile failed"
+	    )
+            }
+	    }
 }
 }
 
