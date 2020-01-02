@@ -12,20 +12,21 @@ environment{
 stages {
 
 stage('Download from GCS_DOckerfile') {
-script{
-           try{
+
            steps{
                 
                 step([$class: 'DownloadStep', 
 			credentialsId:env.projectId,  bucketUri: "gs://${bucketName}/${gcsPath}/Dockerfile",
                       localDirectory: "/var/lib/jenkins/workspace/"])
                       }
-            }
-            catch(Exception e){
+            
+            post{
+	    failure{
             error_message= "Downloading Dockerfile failed"
             }
+	    }
         }
-	}
+	
 
 stage('Download from GCS_pyfile') {
 script{
