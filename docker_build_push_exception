@@ -87,9 +87,9 @@ stage('Download from GCS_pyfile') {
 			}
         post{
 	    failure{
-	    step(
+	    script{
             echo "failure"
-	    )
+	    }
             }
 	    }
         
