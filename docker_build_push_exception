@@ -10,8 +10,9 @@ environment{
 
 
 stages {
-script{
+
 stage('Download from GCS_DOckerfile') {
+script{
            try{
            steps{
                 
@@ -24,8 +25,10 @@ stage('Download from GCS_DOckerfile') {
             error_message= "Downloading Dockerfile failed"
             }
         }
+	}
 
 stage('Download from GCS_pyfile') {
+script{
            try{
            steps{
 	    	script{
@@ -86,10 +89,11 @@ stage('Download from GCS_pyfile') {
         }
             }
         
-
+}
 
 
 stage('Build image') {
+script{
 	try{
   steps{
 		script{
@@ -103,8 +107,9 @@ stage('Build image') {
 error_message= "Building image failed"
 }
 	}
-
+}
 stage('Push image') {
+script{
 	try{
   steps{
 		script{
@@ -120,6 +125,7 @@ error_message= "Pushing image failed"
 }
 }
 }
+}
 
 post {
                 success {
@@ -132,6 +138,6 @@ post {
                         echo error_message
                     }
                 }
-}
+
 }
 }
